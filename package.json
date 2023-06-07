@@ -8,6 +8,10 @@
     "build": "webpack --mode production",
     "start": "webpack serve --mode development --open"
   },
+  "devDependencies": {
+    "eslint": "8.28.0",
+    "eslint-config-htmlacademy": "8.0.0"
+  },
   "browserslist": [
     "last 2 versions",
     "not dead",
@@ -15,10 +19,6 @@
     "not op_mini all",
     "not < 0.25%"
   ],
-  "devDependencies": {
-    "eslint": "8.28.0",
-    "eslint-config-htmlacademy": "8.0.0"
-  },
   "engines": {
     "node": "18"
   },
