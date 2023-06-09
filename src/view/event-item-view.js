@@ -3,13 +3,12 @@ import {convertToDateTime, convertToEventDate, convertToEventDateTime, convertTo
 import {getRandomOffers} from '../mock/offers.js';
 import { randomDestinations } from '../mock/trip-destination.js';
 
-const createOffersTemplate = (offers) => offers.map((offer) => `
-    <li class="event__offer">
+const createOffersTemplate = (offers) => offers.map((offer) =>
+  `<li class="event__offer">
       <span class="event__offer-title">${offer.title}</span>
       &plus;&euro;&nbsp;
       <span class="event__offer-price">${offer.price}</span>
-    </li>
-  `).join('');
+    </li>`).join('');
 
 
 const createEvenItemTemplate = (eventPoint) => {
@@ -54,18 +53,25 @@ const createEvenItemTemplate = (eventPoint) => {
 };
 
 export default class EventItemView {
+
+  #element = null;
+
   constructor({tripPoint}) {
     this.tripPoint = tripPoint;
   }
 
-  getTemplate() {
+  get template() {
     return createEvenItemTemplate(this.tripPoint);
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
-    return this.element;
+    return this.#element;
+  }
+
+  removeElement() {
+    this.#element = null;
   }
 }
