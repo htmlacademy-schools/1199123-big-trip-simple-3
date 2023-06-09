@@ -1,18 +1,30 @@
-import AbstractView from './abstract-view.js';
+import {createElement} from '../render';
 
-const createTemplate = () =>
-  `<form class="trip-filters" action="#" method="get">
-    <div class="trip-filters__filter">
-        <input id="filter-everything" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="everything">
-        <label class="trip-filters__filter-label" for="filter-everything">Everything</label>
+const createFiltersTemplate = () => (
+  `<form className="trip-filters" action="#" method="get">
+    <div className="trip-filters__filter">
+      <input id="filter-everything" className="trip-filters__filter-input  visually-hidden" type="radio"
+             name="trip-filter" value="everything">
+        <label className="trip-filters__filter-label" htmlFor="filter-everything">Everything</label>
     </div>
-    <div class="trip-filters__filter">
-        <input id="filter-future" class="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter" value="future">
-        <label class="trip-filters__filter-label" for="filter-future">Future</label>
+    <div className="trip-filters__filter">
+      <input id="filter-future" className="trip-filters__filter-input  visually-hidden" type="radio" name="trip-filter"
+             value="future">
+        <label className="trip-filters__filter-label" htmlFor="filter-future">Future</label>
     </div>
-    <button class="visually-hidden" type="submit">Accept filter</button>
-  </form>`;
+    <button className="visually-hidden" type="submit">Accept filter</button>
+  </form>`
+);
 
-export default class EventsFilterView extends AbstractView {
-  getTemplate = () => createTemplate();
+export default class EventFilterFormView {
+  getTemplate() {
+    return createFiltersTemplate;
+  }
+
+  getElement() {
+    if (!this.element) {
+      this.element = createElement(this.getTemplate());
+    }
+    return this.element;
+  }
 }
