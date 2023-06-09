@@ -1,24 +1,31 @@
-import { DESCRIPTIONS, generatePicture, getRandomInt } from '../utils/random.js';
+import { mockTexts, places } from './mock-const.js';
+import { getRandomItem, createIDgenerator, getRandomPictureId } from '../utils/item-utils.js';
 
-export const names = ['Chamonix', 'Berlin', 'Moscow', 'LA', 'Geneva'];
+const NUMBER_OF_PICTURES = Math.floor(Math.random() * 6) + 1;
+export const destinations = [];
 
-export const generateDestination = (id) => ({
-  id,
-  description: DESCRIPTIONS[getRandomInt(0, DESCRIPTIONS.length - 1)],
-  name: names[getRandomInt(0, names.length - 1)],
-  pictures:
-    Array.from({length: getRandomInt(2, 10)}, generatePicture)
-});
-
-export const randomDestinations = (() => {
-  const destinations = [];
-
-  for (let i = 0; i <= 10; i++) {
-    destinations.push(generateDestination(i));
+export const generatePics = () => {
+  const pics = [];
+  for (let i = 0; i < NUMBER_OF_PICTURES; i++) {
+    const pic = {
+      src: `img/photos/${getRandomPictureId()}.jpg`,
+      description: getRandomItem(mockTexts)
+    };
+    pics.push(pic);
   }
+  return pics;
+};
 
-  return {
-    getDestination: (id) => destinations[id],
-    getAllDestinations: () => destinations,
-  };
-})();
+const generateId = createIDgenerator();
+export const generateDestinations = (n) => {
+  for (let i = 0; i < n; i++) {
+    const destination = {
+      id: generateId(),
+      description: getRandomItem(mockTexts),
+      name: getRandomItem(places),
+      pictures: generatePics()
+    };
+    destinations.push(destination);
+  }
+  return destinations;
+};

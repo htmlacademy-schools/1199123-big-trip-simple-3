@@ -1,16 +1,26 @@
-import { getRandomDate } from '../utils/date.js';
-import { getRandomInt } from '../utils/random.js';
+import { getRandomItem, getRandomPrice, createIDgenerator } from '../utils/item-utils.js';
+import { pointTypes, dates } from './mock-const.js';
+import { destinations } from './trip-destination.js';
+import { getRandomOffersIdsByType } from '../utils/offers.js';
 
-const TRIP_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-export const getRandomType = () => TRIP_TYPES[getRandomInt(0, TRIP_TYPES.length - 1)];
+export const points = [];
 
-export const generateTripPoint = () => ({
-  'base_price': getRandomInt(500, 2000),
-  'date_from': getRandomDate(),
-  'date_to': getRandomDate(),
-  'destination': getRandomInt(0, 9),
-  'id': getRandomInt(0, 3),
-  'offers': [1, 3, 5],
-  'type': getRandomType()
-});
+const generatePointId = createIDgenerator();
+export const generatePoints = (n) => {
+  for (let i = 0; i < n; i++) {
+    const tripDates = getRandomItem(dates);
+    const type = getRandomItem(pointTypes);
+    const point = {
+      basePrice: getRandomPrice(),
+      dateFrom: tripDates.dateFrom,
+      dateTo: tripDates.dateTo,
+      destination: getRandomItem(destinations).id,
+      id: generatePointId(),
+      offersIDs: getRandomOffersIdsByType(type),
+      type
+    };
+    points.push(point);
+  }
+  return points;
+};
