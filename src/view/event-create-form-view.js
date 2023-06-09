@@ -1,4 +1,4 @@
-import { createElement } from '../render';
+import AbstractView from '../framework/view/abstract-view.js';
 import { randomDestinations } from '../mock/trip-destination.js';
 import { convertToFormDate, convertToTime } from '../utils/date.js';
 
@@ -151,26 +151,16 @@ const createEventItemFormTemplate = (eventPoint = {}) => {
               </form>`;
 };
 
-export default class NewItemFormView {
+export default class NewItemFormView extends AbstractView {
 
-  #element = null;
+  #tripPoint = null;
 
   constructor({tripPoint}) {
-    this.tripPoint = tripPoint;
+    super();
+    this.#tripPoint = tripPoint;
   }
 
   get template() {
-    return createEventItemFormTemplate(this.tripPoint);
-  }
-
-  get element() {
-    if (!this.#element) {
-      this.#element = createElement(this.template);
-    }
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
+    return createEventItemFormTemplate(this.#tripPoint);
   }
 }
