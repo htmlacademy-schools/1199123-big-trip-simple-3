@@ -1,6 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import { capitalizeType, getItemById } from '../utils/item-utils.js';
-import { convertToEventDateTime, convertToEventDate, convertToDateTime, convertToTime } from '../utils/formatTime-Utils.js';
+import { convertToEventDateTime, convertToEventDate, convertToDateTime, convertToTime } from '../utils/date.js';
 
 
 function createOffersTemplate(offers, offersIDs, type) {
