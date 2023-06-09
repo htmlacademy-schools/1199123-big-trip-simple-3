@@ -20,3 +20,5 @@ export const getRandomPictureId = () => Math.floor(Math.random() * 5) + 1;
 export const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export const capitalizeType = (type) => type.charAt(0).toUpperCase() + type.slice(1);
+
+export const updateItem = (items, update) => items.map((item) => item.id === update.id ? update : item);

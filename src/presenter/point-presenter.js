@@ -10,6 +10,7 @@ const Mode = {
 
 export default class TripPointPresenter {
   #handleModeChange = null;
+  #handleDataChange = null;
 
   #tripPointList = null;
   #editFormComponent = null;
@@ -20,9 +21,10 @@ export default class TripPointPresenter {
   #offers = null;
   #mode = Mode.DEFAULT;
 
-  constructor({tripPointList, onModeChange}) {
+  constructor({tripPointList, onModeChange, onDataChange}) {
     this.#tripPointList = tripPointList;
     this.#handleModeChange = onModeChange;
+    this.#handleDataChange = onDataChange;
   }
 
   init(tripPoint, destinations, offers) {
@@ -44,7 +46,8 @@ export default class TripPointPresenter {
       tripPoint: this.#tripPoint,
       destinations: this.#destinations,
       offers: this.#offers,
-      onFormSubmit: this.#handleFormSubmit
+      onFormSubmit: this.#handleFormSubmit,
+      onRollUpButton: this.#handleRollUpButtonClick
     });
 
     if (prevTripPointComponent === null || prevEditFormComponent === null) {
@@ -87,24 +90,29 @@ export default class TripPointPresenter {
     this.#mode = Mode.DEFAULT;
   };
 
-  #ecsKeyDownHandler = (evt) => {
+  #escKeyDownHandler = (evt) => {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
       this.#editFormComponent.reset(this.#tripPoint);
       this.#replaceFormToPoint();
-      document.body.removeEventListener('keydown', this.#ecsKeyDownHandler);
+      document.body.removeEventListener('keydown', this.#escKeyDownHandler);
     }
   };
 
-
   #handleEditClick = () => {
     this.#replacePointToForm();
-    document.body.addEventListener('keydown', this.#ecsKeyDownHandler);
-    this.#editFormComponent.reset(this.#tripPoint);
+    document.body.addEventListener('keydown', this.#escKeyDownHandler);
   };
 
-  #handleFormSubmit = () => {
+  #handleFormSubmit = (tripPoint) => {
+    this.#handleDataChange(tripPoint);
     this.#replaceFormToPoint();
-    document.body.removeEventListener('keydown', this.#ecsKeyDownHandler);
+    document.body.removeEventListener('keydown', this.#escKeyDownHandler);
+  };
+
+  #handleRollUpButtonClick = () => {
+    this.#editFormComponent.reset(this.#tripPoint);
+    this.#replaceFormToPoint();
+    document.body.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 }

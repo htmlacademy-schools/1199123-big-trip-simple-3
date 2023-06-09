@@ -4,7 +4,7 @@ import TripPointPresenter from './point-presenter.js';
 import EventListView from '../view/event-list-view.js';
 import { SortType } from '../utils/constant.js';
 import { sorts } from '../utils/sort.js';
-import EditFormView from '../view/edit-form-view.js';
+import EditFormView from '../view/event-edit-form-view.js';
 import EventListSortView from '../view/event-list-sort-view.js';
 
 export default class EventPresenter {
