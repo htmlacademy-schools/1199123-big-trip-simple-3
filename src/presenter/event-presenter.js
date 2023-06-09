@@ -10,10 +10,12 @@ export default class EventPresenter {
   #container = null;
   #tripPointsModel = null;
   #tripListComponent = null;
+  #sorters = null;
 
-  constructor({container, tripPointsModel}) {
+  constructor({container, tripPointsModel, sorters}) {
     this.#tripPointsModel = tripPointsModel;
     this.#container = container;
+    this.#sorters = sorters;
   }
 
   init() {
@@ -24,7 +26,7 @@ export default class EventPresenter {
       render(new EventNoPointsView(), this.#container);
     } else {
       this.#tripListComponent = new EventListView();
-      render(new EventListSortView(), this.#container);
+      render(new EventListSortView(this.#sorters), this.#container);
       render(this.#tripListComponent, this.#container);
       render(new NewItemFormView(tripPoints[0]), this.#tripListComponent.element);
       for (let i = 1; i < tripPoints.length - 1; i++) {
