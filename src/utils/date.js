@@ -11,3 +11,4 @@ export const convertToDateTime = (date) => date.substring(0, date.indexOf(':'));
 export const convertToTime = (date) => dayjs(date).format(TIME_FORMAT);
 export const convertToFormDate = (date) => dayjs(date).format(FORM_DATE_FORMAT);
 export const convertToBasicDate = (date) => dayjs(date).format(BASIC_DATE_FORMAT);
+export const isDatesEqual = (dateA, dateB) => (!dateA && !dateB) || dayjs(dateA).isSame(dateB, 'D');

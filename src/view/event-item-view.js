@@ -3,7 +3,7 @@ import { capitalizeType, getItemById } from '../utils/item-utils.js';
 import { convertToEventDateTime, convertToEventDate, convertToDateTime, convertToTime } from '../utils/date.js';
 
 
-function createOffersTemplate(offers, offersIDs, type) {
+const createOffersTemplate = (offers, offersIDs, type) => {
   const currentTypeOffers = offers.find((el) => el.type === type).offers;
   return currentTypeOffers.filter((el) => offersIDs.includes(el.id)).map((offer) => `
     <li class="event__offer">
@@ -12,12 +12,12 @@ function createOffersTemplate(offers, offersIDs, type) {
       <span class="event__offer-price">${offer.price}</span>
     </li>`
   ).join('');
-}
+};
 
-function createTripPointTemplate(tripPoint, destinations, offers) {
+const createTripPointTemplate = (tripPoint, destinations, offers) => {
   const destination = getItemById(destinations, tripPoint.destination);
-  return (
-    `<li class="trip-events__item">
+  return (`
+    <li class="trip-events__item">
     <div class="event">
       <time class="event__date" datetime="${convertToEventDateTime(tripPoint.dateFrom)}">${convertToEventDate(tripPoint.dateFrom)}</time>
       <div class="event__type">
@@ -44,7 +44,7 @@ function createTripPointTemplate(tripPoint, destinations, offers) {
     </div>
   </li>`
   );
-}
+};
 
 export default class TripPointView extends AbstractView {
   #tripPoint = null;
