@@ -2,6 +2,8 @@ import {remove, render, replace} from '../framework/render.js';
 import { isEscapeKey } from '../utils/item-utils.js';
 import EventItemView from '../view/event-item-view.js';
 import EditFormView from '../view/event-edit-form-view.js';
+import { UserAction, UpdateType } from '../utils/constant.js';
+import { isDatesEqual } from '../utils/date.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -47,7 +49,8 @@ export default class TripPointPresenter {
       destinations: this.#destinations,
       offers: this.#offers,
       onFormSubmit: this.#handleFormSubmit,
-      onRollUpButton: this.#handleRollUpButtonClick
+      onRollUpButton: this.#handleRollUpButtonClick,
+      onDeleteClick: this.#handleDeleteClick
     });
 
     if (prevTripPointComponent === null || prevEditFormComponent === null) {
@@ -88,6 +91,7 @@ export default class TripPointPresenter {
   #replaceFormToPoint = () => {
     replace(this.#tripPointComponent, this.#editFormComponent);
     this.#mode = Mode.DEFAULT;
+    document.body.removeEventListener('keydown', this.#escKeyDownHandler);
   };
 
   #escKeyDownHandler = (evt) => {
@@ -104,8 +108,13 @@ export default class TripPointPresenter {
     document.body.addEventListener('keydown', this.#escKeyDownHandler);
   };
 
-  #handleFormSubmit = (tripPoint) => {
-    this.#handleDataChange(tripPoint);
+  #handleFormSubmit = (update) => {
+    const isMinorUpdate = !isDatesEqual(this.#tripPoint.dateFrom, update.dateFrom) || this.#tripPoint.basePrice !== update.basePrice;
+    this.#handleDataChange(
+      UserAction.UPDATE_TRIPPOINT,
+      isMinorUpdate ? UpdateType.MINOR : UpdateType.PATCH,
+      update,
+    );
     this.#replaceFormToPoint();
     document.body.removeEventListener('keydown', this.#escKeyDownHandler);
   };
@@ -113,6 +122,13 @@ export default class TripPointPresenter {
   #handleRollUpButtonClick = () => {
     this.#editFormComponent.reset(this.#tripPoint);
     this.#replaceFormToPoint();
-    document.body.removeEventListener('keydown', this.#escKeyDownHandler);
+  };
+
+  #handleDeleteClick = (tripPoint) => {
+    this.#handleDataChange(
+      UserAction.DELETE_TRIPPOINT,
+      UpdateType.MINOR,
+      tripPoint
+    );
   };
 }

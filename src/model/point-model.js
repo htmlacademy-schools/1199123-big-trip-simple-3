@@ -1,23 +1,54 @@
-export default class PointModel {
-  #tripPoints = null;
-  #destinations = null;
-  #offers = null;
+import Observable from '../framework/observable.js';
 
-  constructor (tripPoints, destinations, offers) {
+export default class PointModel extends Observable {
+  #tripPoints = [];
+
+  constructor (tripPoints) {
+    super();
     this.#tripPoints = tripPoints;
-    this.#destinations = destinations;
-    this.#offers = offers;
   }
 
   get tripPoints() {
     return this.#tripPoints;
   }
 
-  get destinations() {
-    return this.#destinations;
+  updateTripPoint(updateType, update) {
+    const index = this.#tripPoints.findIndex((tripPoint) => tripPoint.id === update.id);
+
+    if (index === -1) {
+      throw new Error('Can\'t update unexisting tripPoint');
+    }
+
+    this.#tripPoints = [
+      ...this.tripPoints.slice(0, index),
+      update,
+      ...this.#tripPoints.slice(index + 1),
+    ];
+
+    this._notify(updateType, update);
   }
 
-  get offers() {
-    return this.#offers;
+  addTripPoint(updateType, update) {
+    this.#tripPoints = [
+      update,
+      ...this.#tripPoints
+    ];
+
+    this._notify(updateType, update);
+  }
+
+  deleteTripPoint(updateType, update) {
+    const index = this.#tripPoints.findIndex((tripPoint) => tripPoint.id === update.id);
+
+    if (index === -1) {
+      throw new Error('Cannot delete unexisting tripPoint');
+    }
+
+    this.#tripPoints = [
+      ...this.tripPoints.slice(0, index),
+      ...this.#tripPoints.slice(index + 1),
+    ];
+
+    this._notify(updateType);
   }
 }

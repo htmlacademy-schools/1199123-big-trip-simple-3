@@ -1,10 +1,16 @@
-const FilterType = {
+export const FilterType = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
   PAST: 'past'
 };
 
-const SortTypeForDrawing = {
+export const FilterTypeDescriptions = {
+  [FilterType.EVERYTHING]: 'EVERYTHING',
+  [FilterType.PAST]: 'PAST',
+  [FilterType.FUTURE]: 'FUTURE',
+};
+
+export const SortTypeForDrawing = {
   DAY: 'day',
   EVENT: 'event',
   TIME: 'time',
@@ -12,7 +18,7 @@ const SortTypeForDrawing = {
   OFFER: 'offer'
 };
 
-const SortType = {
+export const SortType = {
   DAY: 'sort-day',
   EVENT: 'sort-event',
   TIME: 'sort-time',
@@ -20,4 +26,14 @@ const SortType = {
   OFFER: 'sort-offer'
 };
 
-export {SortType, FilterType, SortTypeForDrawing};
+export const UserAction = {
+  UPDATE_TRIPPOINT: 'UPDATE_TRIPPOINT',
+  ADD_TRIPPOINT: 'ADD_TRIPPOINT',
+  DELETE_TRIPPOINT: 'DELETE_TRIPPOINT',
+};
+
+export const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+};
