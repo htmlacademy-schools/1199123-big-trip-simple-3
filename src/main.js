@@ -1,11 +1,14 @@
-import { render } from './render.js';
+import {render} from './render.js';
 import EventPresenter from './presenter/event-presenter.js';
-import EventsFilterView from './view/event-filter-form-view.js';
+import EventFilterFormView from './view/event-filter-form-view.js';
+import TripPointModel from './model/model.js';
 
-const filterFormContainer = document.querySelector('.trip-controls__filters');
-const tripEventsContainer = document.querySelector('.trip-events');
-const eventPresenter = new EventPresenter();
+const filters = document.querySelector('.trip-controls__filters');
+render(new EventFilterFormView(), filters);
 
-render(new EventsFilterView(), filterFormContainer);
+const container = document.querySelector('.trip-events');
 
-eventPresenter.init(tripEventsContainer);
+const tripPointsModel = new TripPointModel();
+const presenter = new EventPresenter(tripPointsModel);
+
+presenter.init(container);

@@ -1,25 +1,27 @@
-import { render } from '../render.js';
-
-import EventsFormView from '../view/event-list-edit-view.js';
-import EventsListView from '../view/event-list-view.js';
-import EventItemView from '../view/event-item-view.js';
+import { render } from '../render';
 import EventListSortView from '../view/event-list-sort-view.js';
+import EventListView from '../view/event-list-view.js';
+import EventItemView from '../view/event-item-view';
+import EventEditPointView from '../view/event-edit-point-view.js';
+import NewItemFormView from '../view/event-create-form-view.js';
 
 export default class EventPresenter {
-  eventsListView = new EventsListView();
-  #container = null;
+  tripListComponent = new EventListView();
 
-  init = (container) => {
-    this.#container = container;
+  constructor(tripPointsModel) {
+    this.tripPointsModel = tripPointsModel;
+  }
 
-    render(new EventListSortView(), this.#container);
+  init(container) {
+    this.tripPoints = [...this.tripPointsModel.getTripPoints()];
+    this.container = container;
 
-    this.eventsListView.addComponent(new EventsFormView());
-
-    for (let i = 0; i < 3; i++) {
-      this.eventsListView.addComponent(new EventItemView());
+    render(new EventListSortView(), this.container);
+    render(this.tripListComponent, this.container);
+    render(new NewItemFormView({tripPoint: this.tripPoints[0]}), this.tripListComponent.getElement());
+    render(new EventEditPointView(), this.tripListComponent.getElement());
+    for (let i = 0; i < this.tripPoints.length; i++) {
+      render(new EventItemView({tripPoint: this.tripPoints[i]}), this.tripListComponent.getElement());
     }
-
-    render(this.eventsListView, this.#container);
-  };
+  }
 }
