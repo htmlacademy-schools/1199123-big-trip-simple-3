@@ -1,6 +1,6 @@
 import {createElement} from '../render';
 
-const createFiltersTemplate = () => (
+const createFiltersTemplate = () =>
   `<form className="trip-filters" action="#" method="get">
     <div className="trip-filters__filter">
       <input id="filter-everything" className="trip-filters__filter-input  visually-hidden" type="radio"
@@ -13,18 +13,24 @@ const createFiltersTemplate = () => (
         <label className="trip-filters__filter-label" htmlFor="filter-future">Future</label>
     </div>
     <button className="visually-hidden" type="submit">Accept filter</button>
-  </form>`
-);
+  </form>`;
 
 export default class EventFilterFormView {
-  getTemplate() {
+
+  #element = null;
+
+  get template() {
     return createFiltersTemplate;
   }
 
-  getElement() {
-    if (!this.element) {
-      this.element = createElement(this.getTemplate());
+  get element() {
+    if (!this.#element) {
+      this.#element = createElement(this.template);
     }
-    return this.element;
+    return this.#element;
+  }
+
+  removeElement() {
+    this.#element = null;
   }
 }

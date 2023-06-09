@@ -4,11 +4,11 @@ import EventFilterFormView from './view/event-filter-form-view.js';
 import TripPointModel from './model/model.js';
 
 const filters = document.querySelector('.trip-controls__filters');
-render(new EventFilterFormView(), filters);
 
 const container = document.querySelector('.trip-events');
 
 const tripPointsModel = new TripPointModel();
-const presenter = new EventPresenter(tripPointsModel);
+const presenter = new EventPresenter(container, tripPointsModel);
 
-presenter.init(container);
+render(new EventFilterFormView(), filters);
+presenter.init();
