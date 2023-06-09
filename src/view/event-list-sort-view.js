@@ -23,7 +23,7 @@ export default class EventListSortView extends AbstractView {
 
   #sorts = null;
 
-  constructor(sorts) {
+  constructor({sorts}) {
     super();
     this.#sorts = sorts;
   }
