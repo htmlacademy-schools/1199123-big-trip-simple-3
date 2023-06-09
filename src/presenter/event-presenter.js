@@ -3,6 +3,7 @@ import EventListSortView from '../view/event-list-sort-view.js';
 import EventListView from '../view/event-list-view.js';
 import EventItemView from '../view/event-item-view';
 import NewItemFormView from '../view/event-create-form-view.js';
+import EventNoPointsView from '../view/event-no-points-view.js';
 
 export default class EventPresenter {
   #container = null;
@@ -19,6 +20,10 @@ export default class EventPresenter {
   init() {
     render(new EventListSortView(), this.#container);
     render(this.#tripListComponent, this.#container);
+
+    if (this.#tripPoints.length === 0) {
+      render(new EventNoPointsView(), this.#container);
+    }
 
     for (let i = 0; i < this.#tripPoints.length; i++) {
       this.#renderTripPoint(this.#tripPoints[i]);
