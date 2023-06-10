@@ -1,4 +1,4 @@
-import TripPresenter from './presenter/event-presenter';
+import TripPresenter from './presenter/trip-presenter';
 import PointModel from './model/point-model';
 import OffersModel from './model/offers-model';
 import DestinationsModel from './model/destinations-model';

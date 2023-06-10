@@ -4,11 +4,11 @@ import { filter } from '../utils/filter-main.js';
 import PointsList from '../view/trip-list-view.js';
 import NoPointMessage from '../view/trip-no-points-view.js';
 import {remove, render, RenderPosition} from '../framework/render.js';
-import PointPresenter from '../presenter/point-presenter.js';
+import PointPresenter from './point-presenter.js';
 import { FilterType, SortType, UpdateType, UserAction } from '../utils/filters-and-sorts.js';
 import NewWaypointPresenter from './new-point-presenter.js';
 import LoadingView from '../view/trip-loading-view.js';
-import UiBlocker from '../framework/ui-blocker/ui-blocker';
+import UiBlocker from '../framework/ui-blocker/ui-blocker.js';
 
 const TimeLimit = {
   LOWER_LIMIT: 350,
