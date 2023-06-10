@@ -1,10 +1,10 @@
-import { getDateWithYears } from '../utils/date';
-import { getItemById } from '../utils/item-utils';
-import { capitalizeType } from '../utils/item-utils';
-import { pointTypes } from '../utils/filters-and-sorts';
+import { getDateWithYears } from '../utils/date.js';
+import { getItemById } from '../utils/item-utils.js';
+import { capitalizeType } from '../utils/item-utils.js';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view';
+import { pointTypes } from '../utils/filters-and-sorts.js';
 import he from 'he';
 
 const BLANK_WAYPOINT = {
