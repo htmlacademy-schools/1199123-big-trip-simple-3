@@ -4,13 +4,15 @@ export const FilterType = {
   PAST: 'past'
 };
 
+export const pointTypes = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+
 export const FilterTypeDescriptions = {
   [FilterType.EVERYTHING]: 'EVERYTHING',
   [FilterType.PAST]: 'PAST',
   [FilterType.FUTURE]: 'FUTURE',
 };
 
-export const SortTypeForDrawing = {
+export const SortType = {
   DAY: 'day',
   EVENT: 'event',
   TIME: 'time',
@@ -18,22 +20,23 @@ export const SortTypeForDrawing = {
   OFFER: 'offer'
 };
 
-export const SortType = {
-  DAY: 'sort-day',
-  EVENT: 'sort-event',
-  TIME: 'sort-time',
-  PRICE: 'sort-price',
-  OFFER: 'sort-offer'
+export const SortTypeDescription = {
+  [SortType.DAY]: 'Day',
+  [SortType.EVENT]: 'Event',
+  [SortType.TIME]: 'Time',
+  [SortType.PRICE]: 'Price',
+  [SortType.OFFER]: 'Offer'
 };
 
 export const UserAction = {
-  UPDATE_TRIPPOINT: 'UPDATE_TRIPPOINT',
-  ADD_TRIPPOINT: 'ADD_TRIPPOINT',
-  DELETE_TRIPPOINT: 'DELETE_TRIPPOINT',
+  UPDATE_WAYPOINT: 'UPDATE_WAYPOINT',
+  ADD_WAYPOINT: 'ADD_WAYPOINT',
+  DELETE_WAYPOINT: 'DELETE_WAYPOINT',
 };
 
 export const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
+  INIT: 'INIT',
 };

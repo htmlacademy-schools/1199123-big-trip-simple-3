@@ -1,53 +1,58 @@
-import PointModel from './model/point-model.js';
-import { mockInit } from './mock/mock-utils.js';
-import { offerTypes } from './mock/mock-const.js';
-import EventPresenter from './presenter/event-presenter.js';
-import DestinationsModel from './model/destinations-model.js';
-import OffersModel from './model/offers-model.js';
-import FilterModel from './model/filter-model.js';
-import FilterPresenter from './presenter/filter-presenter.js';
-import { render } from './render.js';
-import NewTripPointButtonView from './view/event-new-point-button-view.js';
+import TripPresenter from './presenter/event-presenter';
+import PointModel from './model/point-model';
+import OffersModel from './model/offers-model';
+import DestinationsModel from './model/destinations-model';
+import FilterModel from './model/filter-model';
+import FilterPresenter from './presenter/filter-presenter';
+import {render} from './render';
+import NewPointButton from './view/trip-new-point-button-view';
+import WaypointsApiService from '../points-api-service';
 
-const tripControlsFilters = document.querySelector('.trip-controls__filters');
+const siteHeaderElement = document.querySelector('.trip-controls__filters');
 const container = document.querySelector('.trip-events');
-const siteHeaderElement = document.querySelector('.trip-main');
+const placeForButton = document.querySelector('.trip-main');
 
-const [tripPoints, destinations] = mockInit(5, 10);
-const pointsModel = new PointModel(tripPoints);
-const destinationsModel = new DestinationsModel(destinations);
-const offersModel = new OffersModel(offerTypes);
-const filterModel = new FilterModel();
+const AUTHORIZATION = 'Basic smolentsev';
+const END_POINT = 'https://18.ecmascript.pages.academy/big-trip';
 
-const newTripPointButtonComponent = new NewTripPointButtonView({
-  onClick: handleNewTripPointButtonClick
-});
+const waypointsApiService = new WaypointsApiService(END_POINT, AUTHORIZATION);
 
-const eventPresenter = new EventPresenter({
-  container,
-  pointsModel,
-  destinationsModel,
-  offersModel,
-  filterModel,
-  onNewTripPointDestroy
+const modelWaypoints = new PointModel({waypointsApiService});
+const modelOffers = new OffersModel({waypointsApiService});
+const modelDestinations = new DestinationsModel({waypointsApiService});
+const modelFilter = new FilterModel();
+
+const tripPresenter = new TripPresenter({
+  boardContainer: container,
+  waypointsModel: modelWaypoints,
+  modelOffers,
+  modelDestinations,
+  modelFilter,
+  onNewWaypointDestroy: handleNewTaskFormClose
 });
 
 const filterPresenter = new FilterPresenter({
-  filterContainer: tripControlsFilters,
-  filterModel,
-  pointsModel
+  filterContainer: siteHeaderElement,
+  modelFilter,
+  modelWaypoints
 });
 
+const newPointButtonComponent = new NewPointButton({
+  onClick: handleNewTaskButtonClick
+});
 
-function handleNewTripPointButtonClick() {
-  eventPresenter.createTripPoint();
-  newTripPointButtonComponent.element.disabled = true;
+function handleNewTaskFormClose() {
+  newPointButtonComponent.element.disabled = false;
 }
 
-function onNewTripPointDestroy() {
-  newTripPointButtonComponent.element.disabled = false;
+function handleNewTaskButtonClick() {
+  tripPresenter.createWaypoint();
+  newPointButtonComponent.element.disabled = true;
 }
 
-render(newTripPointButtonComponent, siteHeaderElement);
 filterPresenter.init();
-eventPresenter.init();
+tripPresenter.init();
+modelWaypoints.init()
+  .finally(() => {
+    render(newPointButtonComponent, placeForButton);
+  });
