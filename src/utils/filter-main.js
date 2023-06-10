@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
-import { FilterType } from './constant.js';
+import { FilterType } from './filters-and-sorts.js';
 
-const isFuture = (date) => date && dayjs().isBefore(date, 'D');
-const isPast = (date) => date && dayjs().isAfter(date, 'D');
+export const isFuture = (date) => date && dayjs().isBefore(date, 'D');
+export const isPast = (date) => date && dayjs().isAfter(date, 'D');
+export const isDatesEqual = (date1, date2) => (!date1 && !date2) || dayjs(date1).isSame(date2, 'D');
 
 export const filter = {
   [FilterType.FUTURE]: (tripPoints) => tripPoints.filter((tripPoint) => isFuture(tripPoint.dateFrom)),
