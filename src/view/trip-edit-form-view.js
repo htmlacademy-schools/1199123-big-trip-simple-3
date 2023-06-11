@@ -1,4 +1,4 @@
-import { TRIP_POINT_TYPES } from '../utils/filters-and-sorts';
+import { TRIP_POINT_TYPES } from '../utils/const';
 import AbstractStatefulView from '../framework/view/abstract-stateful-view';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.css';
@@ -128,7 +128,7 @@ const createTripEventsFormTemplate = (tripPoint, destinations, offers, isEditFor
 `;
 };
 
-class EditFormView extends AbstractStatefulView {
+export default class EditFormView extends AbstractStatefulView {
   #offers;
   #destinations;
 
@@ -329,5 +329,3 @@ class EditFormView extends AbstractStatefulView {
     return tripEvent;
   }
 }
-
-export default EditFormView;

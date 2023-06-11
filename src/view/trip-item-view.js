@@ -45,7 +45,7 @@ const createTripEventTemplate = (tripPoint, destinations, offers) => {
 };
 
 
-export default class TripPointView extends AbstractView {
+export default class PointView extends AbstractView {
   #tripPoint;
   #destinations;
   #offers;

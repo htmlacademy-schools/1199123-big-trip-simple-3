@@ -1,12 +1,11 @@
-
 import {remove, render, RenderPosition} from '../framework/render';
-import { UPDATE_TYPE, USER_ACTION } from '../utils/filters-and-sorts';
+import { UPDATE_TYPE, USER_ACTION } from '../utils/const';
 import EditFormView from '../view/trip-edit-form-view';
 
 
-export default class NewTripPointPresenter {
+export default class NewPointPresenter {
   #handleChange;
-  #handelDestroy;
+  #handleDestroy;
   #tripPointsListContainer;
   #tripPointsFormComponent;
 
@@ -14,7 +13,7 @@ export default class NewTripPointPresenter {
   constructor({tripEventsListContainer, onDataChange, onDestroy}) {
     this.#tripPointsListContainer = tripEventsListContainer;
     this.#handleChange = onDataChange;
-    this.#handelDestroy = onDestroy;
+    this.#handleDestroy = onDestroy;
   }
 
   init = ({destinations, offers}) => {
@@ -34,7 +33,7 @@ export default class NewTripPointPresenter {
     render(this.#tripPointsFormComponent, this.#tripPointsListContainer,
       RenderPosition.AFTERBEGIN);
 
-    document.body.addEventListener('keydown', this.#ecsKeyHandler);
+    document.body.addEventListener('keydown', this.#escapeKeyHandler);
   };
 
   destroy() {
@@ -42,12 +41,12 @@ export default class NewTripPointPresenter {
       return;
     }
 
-    this.#handelDestroy();
+    this.#handleDestroy();
 
     remove(this.#tripPointsFormComponent);
     this.#tripPointsFormComponent = null;
 
-    document.body.removeEventListener('keydown', this.#ecsKeyHandler);
+    document.body.removeEventListener('keydown', this.#escapeKeyHandler);
   }
 
   #onSubmit = (tripEvent) => {
@@ -82,7 +81,7 @@ export default class NewTripPointPresenter {
     this.#tripPointsFormComponent.shake(resetFormState);
   }
 
-  #ecsKeyHandler = (evt) => {
+  #escapeKeyHandler = (evt) => {
     if (evt.key === 'Escape') {
       evt.preventDefault();
       this.destroy();

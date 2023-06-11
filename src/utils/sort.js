@@ -1,5 +1,5 @@
 import { sortByDay, sortByPrice, sortByTime } from './date';
-import { SORT_TYPE } from './filters-and-sorts';
+import { SORT_TYPE } from './const';
 
 const offOptions = ['event', 'offer'];
 export const isSelectedOption = (sortType) => (offOptions.includes(sortType) ? 'disabled' : '');

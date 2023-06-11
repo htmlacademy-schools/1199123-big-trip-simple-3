@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { FILTER_TYPE } from './filters-and-sorts.js';
+import { FILTER_TYPE } from './const.js';
 
 export const isFuture = (date) => date && dayjs().isBefore(date, 'D');
 export const isPast = (date) => date && dayjs().isAfter(date, 'D');

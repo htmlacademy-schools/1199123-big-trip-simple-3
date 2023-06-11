@@ -1,6 +1,6 @@
-import FilterView from '../view/trip-filter-form-view';
+import FilterFormView from '../view/trip-filter-form-view';
 import {remove, render, replace} from '../framework/render';
-import { FILTER_TYPE, UPDATE_TYPE } from '../utils/filters-and-sorts';
+import { FILTER_TYPE, UPDATE_TYPE } from '../utils/const';
 import { filter } from '../utils/filter-main';
 
 
@@ -29,7 +29,7 @@ export default class FilterPresenter {
   init() {
     const prevFilterComponent = this.#filterComponent;
 
-    this.#filterComponent = new FilterView({
+    this.#filterComponent = new FilterFormView({
       filters: this.filters,
       currentFilter: this.#filterModel.filter,
       onFilterChange: this.#handleFilterTypeChange

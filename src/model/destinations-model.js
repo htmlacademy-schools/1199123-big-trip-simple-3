@@ -1,6 +1,6 @@
 import Observable from '../framework/observable';
 
-export default class ModelDestinations extends Observable {
+export default class DestinationsModel extends Observable {
   #tripPointApiServer;
   #destinations = [];
 

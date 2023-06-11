@@ -1,8 +1,8 @@
 import {remove, render, replace} from '../framework/render';
 import EditFormView from '../view/trip-edit-form-view';
-import TripPointView from '../view/trip-item-view';
+import PointView from '../view/trip-item-view';
 import { compareDates } from '../utils/date';
-import { UPDATE_TYPE, USER_ACTION } from '../utils/filters-and-sorts';
+import { UPDATE_TYPE, USER_ACTION } from '../utils/const';
 
 
 const Mode = {
@@ -58,7 +58,7 @@ export class PointPresenter {
       }
     });
 
-    this.#tripPointComponent = new TripPointView({
+    this.#tripPointComponent = new PointView({
       tripPoint: tripEvent,
       destinations: destinations,
       offers: offers,

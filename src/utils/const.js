@@ -6,12 +6,6 @@ export const FILTER_TYPE = {
 
 export const TRIP_POINT_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
-export const FilterTypeDescriptions = {
-  [FILTER_TYPE.EVERYTHING]: 'EVERYTHING',
-  [FILTER_TYPE.PAST]: 'PAST',
-  [FILTER_TYPE.FUTURE]: 'FUTURE',
-};
-
 export const SORT_TYPE = {
   DAY: 'day',
   EVENT: 'event',

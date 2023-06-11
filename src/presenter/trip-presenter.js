@@ -1,12 +1,12 @@
 import {remove, render, RenderPosition} from '../framework/render.js';
 import UiBlocker from '../framework/ui-blocker/ui-blocker';
 import EventListView from '../view/trip-list-view.js';
-import SortView from '../view/trip-list-sort-view.js';
+import ListSortView from '../view/trip-list-sort-view.js';
 import LoadingView from '../view/trip-loading-view.js';
-import NewTripPointPresenter from './new-point-presenter';
+import NewPointPresenter from './new-point-presenter';
 import {PointPresenter} from './point-presenter';
-import NoPointsView from '../view/trip-no-points-view.js';
-import { FILTER_TYPE, SORT_TYPE, UPDATE_TYPE, USER_ACTION } from '../utils/filters-and-sorts.js';
+import NoPointsMessageView from '../view/trip-no-points-message-view.js';
+import { FILTER_TYPE, SORT_TYPE, UPDATE_TYPE, USER_ACTION } from '../utils/const.js';
 import { filter } from '../utils/filter-main.js';
 import { SORTS } from '../utils/sort.js';
 
@@ -16,7 +16,7 @@ const TimeLimit = {
   UPPER_LIMIT: 1000,
 };
 
-export default class MainPresenter {
+export default class TripPresenter {
   #tripContainer;
   #tripPointModel;
   #destinationModel;
@@ -30,7 +30,7 @@ export default class MainPresenter {
   #filterType = FILTER_TYPE.EVERYTHING;
   #tripPointPresenter = new Map();
   #isLoading = true;
-  #sortComponent = new SortView({sorts: SORTS, current: SORT_TYPE.DAY});
+  #sortComponent = new ListSortView({sorts: SORTS, current: SORT_TYPE.DAY});
   #loadingComponent = new LoadingView();
   #currentSortType = SORT_TYPE.DAY;
   #uiBlocker = new UiBlocker({
@@ -81,7 +81,7 @@ export default class MainPresenter {
   createEvent = () => {
     this.#currentSortType = SORT_TYPE.DAY;
     this.#filterModel.setFilter(UPDATE_TYPE.MAJOR, FILTER_TYPE.EVERYTHING);
-    this.#createTripPointPresenter = new NewTripPointPresenter({
+    this.#createTripPointPresenter = new NewPointPresenter({
       tripEventsListContainer: this.#tripPointsListComponent.element,
       onDataChange: this.#handleUserAction,
       onDestroy: this.#onCreateTripEventDestroy,
@@ -127,11 +127,11 @@ export default class MainPresenter {
 
   #renderNoEvents = () => {
     if (this.#filterType === FILTER_TYPE.FUTURE) {
-      this.#noPointsView = new NoPointsView('There are no future events now');
+      this.#noPointsView = new NoPointsMessageView('There are no future events now');
     } else if (this.#filterType === FILTER_TYPE.PAST) {
-      this.#noPointsView = new NoPointsView('There are no past events now');
+      this.#noPointsView = new NoPointsMessageView('There are no past events now');
     } else {
-      this.#noPointsView = new NoPointsView();
+      this.#noPointsView = new NoPointsMessageView();
     }
     render(this.#noPointsView, this.#tripContainer);
   };

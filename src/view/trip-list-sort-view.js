@@ -23,7 +23,7 @@ const createSortTemplate = (sorts, current) => `
   </form>
 `;
 
-export default class SortView extends AbstractView {
+export default class ListSortView extends AbstractView {
   #sorts = [];
   #current;
 

@@ -1,8 +1,8 @@
 
 import Observable from '../framework/observable';
-import { UPDATE_TYPE } from '../utils/filters-and-sorts';
+import { UPDATE_TYPE } from '../utils/const';
 
-export default class TripPointModel extends Observable {
+export default class PointModel extends Observable {
 
   #tripPoint = [];
   #tripPointApiServer;
