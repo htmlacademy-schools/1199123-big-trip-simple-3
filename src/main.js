@@ -6,7 +6,7 @@ import FilterPresenter from './presenter/filter-presenter.js';
 import CreateEventButton from './view/trip-new-point-button-view.js';
 import {render} from './framework/render.js';
 import PointModel from './model/point-model.js';
-import { ApiServer } from '../points-api-service.js';
+import { ApiServer } from './services/points-api-service.js';
 
 
 const filterContainer = document.querySelector('.trip-controls__filters');
