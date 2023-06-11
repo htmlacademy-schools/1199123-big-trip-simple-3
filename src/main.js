@@ -1,58 +1,52 @@
-import TripPresenter from './presenter/trip-presenter';
-import PointModel from './model/point-model';
-import OffersModel from './model/offers-model';
-import DestinationsModel from './model/destinations-model';
-import FilterModel from './model/filter-model';
-import FilterPresenter from './presenter/filter-presenter';
-import {render} from './render';
-import NewPointButton from './view/trip-new-point-button-view';
-import WaypointsApiService from '../points-api-service';
+import {render} from './framework/render.js';
+import TripPointModel from './model/point-model.js';
+import { ApiServer } from '../points-api-service.js';
+import ModelOffer from './model/offers-model.js';
+import ModelDestinations from './model/destinations-model.js';
+import ModelFilters from './model/filter-model.js';
+import MainPresenter from './presenter/trip-presenter.js';
+import FilterPresenter from './presenter/filter-presenter.js';
+import CreateTripEventButton from './view/trip-new-point-button-view.js';
 
-const siteHeaderElement = document.querySelector('.trip-controls__filters');
-const container = document.querySelector('.trip-events');
-const placeForButton = document.querySelector('.trip-main');
 
-const AUTHORIZATION = 'Basic smolentsev';
+const filterContainer = document.querySelector('.trip-controls__filters');
+const tripEventsSection = document.querySelector('.trip-events');
+const headerBlock = document.querySelector('.trip-main');
+
+const AUTHORIZATION = 'Basic Smolentsev';
 const END_POINT = 'https://18.ecmascript.pages.academy/big-trip';
 
-const waypointsApiService = new WaypointsApiService(END_POINT, AUTHORIZATION);
+const tripEventApiService = new ApiServer(END_POINT, AUTHORIZATION);
 
-const modelWaypoints = new PointModel({waypointsApiService});
-const modelOffers = new OffersModel({waypointsApiService});
-const modelDestinations = new DestinationsModel({waypointsApiService});
-const modelFilter = new FilterModel();
+const tripEventModel = new TripPointModel({tripEventApiService});
 
-const tripPresenter = new TripPresenter({
-  boardContainer: container,
-  waypointsModel: modelWaypoints,
-  modelOffers,
-  modelDestinations,
-  modelFilter,
-  onNewWaypointDestroy: handleNewTaskFormClose
-});
+const offerModel = new ModelOffer({tripEventApiService});
+const destinationModel = new ModelDestinations({tripEventApiService});
+const filterModel = new ModelFilters();
 
-const filterPresenter = new FilterPresenter({
-  filterContainer: siteHeaderElement,
-  modelFilter,
-  modelWaypoints
-});
-
-const newPointButtonComponent = new NewPointButton({
-  onClick: handleNewTaskButtonClick
-});
-
-function handleNewTaskFormClose() {
-  newPointButtonComponent.element.disabled = false;
-}
-
-function handleNewTaskButtonClick() {
-  tripPresenter.createWaypoint();
-  newPointButtonComponent.element.disabled = true;
-}
-
-filterPresenter.init();
-tripPresenter.init();
-modelWaypoints.init()
-  .finally(() => {
-    render(newPointButtonComponent, placeForButton);
+const tripPresenter = new MainPresenter(
+  tripEventsSection,
+  {
+    tripEventModel,
+    destinationModel,
+    offerModel,
+    filterModel,
+    onCreateTripEventDestroy
   });
+
+const filterPresenter = new FilterPresenter({filterContainer, filterModel, tripEventModel});
+
+const createTripEventButton = new CreateTripEventButton({
+  onClick: () => {
+    tripPresenter.createEvent();
+    createTripEventButton.element.disabled = true;
+  }
+});
+
+function onCreateTripEventDestroy() {
+  createTripEventButton.element.disabled = false;
+} // function so it can be used in trip presenter
+
+tripEventModel.init().finally(() => render(createTripEventButton, headerBlock));
+tripPresenter.init();
+filterPresenter.init();

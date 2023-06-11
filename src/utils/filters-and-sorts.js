@@ -1,18 +1,18 @@
-export const FilterType = {
+export const FILTER_TYPE = {
   EVERYTHING: 'everything',
   FUTURE: 'future',
   PAST: 'past'
 };
 
-export const pointTypes = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
+export const TRIP_POINT_TYPES = ['taxi', 'bus', 'train', 'ship', 'drive', 'flight', 'check-in', 'sightseeing', 'restaurant'];
 
 export const FilterTypeDescriptions = {
-  [FilterType.EVERYTHING]: 'EVERYTHING',
-  [FilterType.PAST]: 'PAST',
-  [FilterType.FUTURE]: 'FUTURE',
+  [FILTER_TYPE.EVERYTHING]: 'EVERYTHING',
+  [FILTER_TYPE.PAST]: 'PAST',
+  [FILTER_TYPE.FUTURE]: 'FUTURE',
 };
 
-export const SortType = {
+export const SORT_TYPE = {
   DAY: 'day',
   EVENT: 'event',
   TIME: 'time',
@@ -21,20 +21,20 @@ export const SortType = {
 };
 
 export const SortTypeDescription = {
-  [SortType.DAY]: 'Day',
-  [SortType.EVENT]: 'Event',
-  [SortType.TIME]: 'Time',
-  [SortType.PRICE]: 'Price',
-  [SortType.OFFER]: 'Offer'
+  [SORT_TYPE.DAY]: 'Day',
+  [SORT_TYPE.EVENT]: 'Event',
+  [SORT_TYPE.TIME]: 'Time',
+  [SORT_TYPE.PRICE]: 'Price',
+  [SORT_TYPE.OFFER]: 'Offer'
 };
 
-export const UserAction = {
-  UPDATE_WAYPOINT: 'UPDATE_WAYPOINT',
-  ADD_WAYPOINT: 'ADD_WAYPOINT',
-  DELETE_WAYPOINT: 'DELETE_WAYPOINT',
+export const USER_ACTION = {
+  UPDATE_TRIPPOINT: 'UPDATE_WAYPOINT',
+  ADD_TRIPPOINT: 'ADD_WAYPOINT',
+  DELETE_TRIPPOINT: 'DELETE_WAYPOINT',
 };
 
-export const UpdateType = {
+export const UPDATE_TYPE = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
